@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Bot;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Prompts;
 
@@ -12,5 +13,17 @@ public class QuestionBot1 : IBot
     public QuestionBot1()
 	{
         dialogs = new DialogSet();
+        dialogs.Add("greetings", new WaterfallStep[]
+        {
+            async (dc, args, next) =>
+            {
+                await dc.Prompt("textPrompt", "What is your name?");
+            },
+            async (dc, args, next) =>
+            {
+                await dc.Context.SendActivity($"Hi {args["Text"]}!");
+                await dc.End();
+            }
+        });
 	}
 }
