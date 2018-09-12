@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Bot;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Core.Extensions;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Prompts;
+using Microsoft.Bot.Schema;
 
 /// <summary>
 /// A simple question bot built off of the online tutorial found at:
@@ -25,5 +30,21 @@ public class QuestionBot1 : IBot
                 await dc.End();
             }
         });
+        dialogs.Add("textPrompt", new Microsoft.Bot.Builder.Dialogs.TextPrompt());
 	}
+
+    public async Task OnTurn(ITurnContext context)
+    {
+        var state = ConversationState<Dictionary<string, object>>.Get(context);
+        var dc = dialogs.CreateContext(context, state);
+        if (context.Activity.Type == ActivityTypes.Message)
+        {
+            await dc.Continue();
+
+            if (!context.Responded)
+            {
+                await dc.Begin("greetings");
+            }
+        }
+    }
 }
