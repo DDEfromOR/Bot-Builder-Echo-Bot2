@@ -64,6 +64,19 @@ namespace Bot_Builder_Echo_Bot2
 
                 options.Middleware.Add(new ConversationState<EchoState>(dataStore));
             });
+
+            //services.AddBot<QuestionBot1>(options =>
+            //{
+            //    options.CredentialProvider = new ConfigurationCredentialProvider(Configuration);
+            //    options.Middleware.Add(new CatchExceptionMiddleware<Exception>(async (context, exception) =>
+            //    {
+            //        await context.TraceActivity("QuestionBot1 Exception", exception);
+            //        await context.SendActivity("Sorry, it looks like something went wrong with QuestionBot1!");
+            //    }));
+
+            //    IStorage datastore = new MemoryStorage();
+            //    options.Middleware.Add(new ConversationState<QuestionBot1State>(datastore));
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
